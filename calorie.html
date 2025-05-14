@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="./static/css/style.css">
+
+  </head>
+
+  <body>
+
+       <div class="flex justify-between items-center h-0 p-4 bg-[#18b955]">
+
+    </div>
+
+    <div class=" text-black text-center p-2 text-sm">
+      Our <a href="#" class="text-blue-700 underline">Terms of Service</a> and
+      <a href="#" class="text-blue-700 underline">Privacy Policy</a> have
+      recently been updated
+    </div>
+
+  
+    <header class="bg-[#18b955] text-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+         
+         <div class="flex-shrink-0">
+  <a href="index.html">
+    <h1 class="text-lg font-bold">
+      myfitness<sup class="text-xs align-top">®</sup>
+    </h1>
+  </a>
+</div>
+
+        
+          <div>
+            <button id="mobile-menu-button" class="focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+   
+    <div id="mobile-menu"
+      class="fixed top-0 right-0 h-full w-64 bg-[#18b955] text-white 
+            transform translate-x-full transition-transform duration-300 z-[9999] ">
+      <div class="flex flex-col px-6 py-6 space-y-4">
+        <button id="close-menu"
+          class="self-end text-white text-2xl focus:outline-none">&times;</button>
+        <a href="index.html" class="hover:text-orange-200">Home</a>
+        <a href="diet.html" class="hover:text-orange-200">Diet Plan</a>
+        <a href="workouts.html" class="hover:text-orange-200">Workouts</a>
+        <a href="calorie.html" class="hover:text-orange-200 active">Calorie
+          Tracker</a>
+        <a href="progress.html" class="hover:text-orange-200">Progress
+          Tracker</a>
+        <a href="routine.html" class="hover:text-orange-200">Routine</a>
+        <a href="profile.html" class="hover:text-orange-200">Profile</a>
+       
+      </div>
+    </div>
+
+
+
+<div class="w-full max-w-4xl bg-white p-8 rounded-lg justify-self-center mx-auto mt-20 shadow">
+    <h1 class="text-4xl text-center text-gray-800 mb-8">Nutrition Tracker</h1>
+
+    <!-- Calories section -->
+    <div class="text-center mb-8">
+        <p class="text-lg text-gray-600 mb-4">Calories: <span id="caloriesEaten" class="font-bold text-[#18b955]">0</span> kcal out of <span id="caloriesGoal" class="font-bold text-[#18b955]">1500</span> kcal</p>
+        <div class="relative pt-1">
+            <div class="flex mb-2 items-center justify-between">
+                <span class="text-xs inline-block py-1 px-2 uppercase rounded-full text-[#18b955]">Calories Progress</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div id="caloriesProgress" class="bg-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Macronutrients section -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-[#18b955] p-4 rounded-lg text-center text-white">
+            <h3 class="text-lg sm:text-xl">Protein</h3>
+            <p id="proteinValue" class="text-xl sm:text-2xl">0g</p>
+        </div>
+        <div class="bg-[#18b955] p-4 rounded-lg text-center text-white">
+            <h3 class="text-lg sm:text-xl">Carbs</h3>
+            <p id="carbsValue" class="text-xl sm:text-2xl">0g</p>
+        </div>
+        <div class="bg-[#18b955] p-4 rounded-lg text-center text-white">
+            <h3 class="text-lg sm:text-xl">Fat</h3>
+            <p id="fatValue" class="text-xl sm:text-2xl">0g</p>
+        </div>
+        <div class="bg-[#18b955] p-4 rounded-lg text-center text-white">
+            <h3 class="text-lg sm:text-xl">Fiber</h3>
+            <p id="fiberValue" class="text-xl sm:text-2xl">0g</p>
+        </div>
+    </div>
+
+    <!-- Meal Sections -->
+    <div class="space-y-6">
+        <!-- Repeatable Meal Section Template -->
+        <div class="meal-option">
+            <div class="flex items-center justify-between">
+                <h2 class="text-md text-gray-800">Breakfast</h2>
+                <button class="text-teal-500 text-2xl" onclick="toggleMeal('breakfast')">+</button>
+            </div>
+            <div id="breakfast" class="meal-content hidden">
+                <input type="text" id="breakfastSearch" placeholder="Search food..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mb-4" oninput="filterOptions('breakfast')">
+                <div id="breakfastOptions" class="meal-options space-y-3"></div>
+            </div>
+        </div>
+
+        <div class="meal-option">
+            <div class="flex items-center justify-between">
+                <h2 class="text-md text-gray-800">Lunch</h2>
+                <button class="text-teal-500 text-2xl" onclick="toggleMeal('lunch')">+</button>
+            </div>
+            <div id="lunch" class="meal-content hidden">
+                <input type="text" id="lunchSearch" placeholder="Search food..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mb-4" oninput="filterOptions('lunch')">
+                <div id="lunchOptions" class="meal-options space-y-3"></div>
+            </div>
+        </div>
+
+        <div class="meal-option">
+            <div class="flex items-center justify-between">
+                <h2 class="text-md text-gray-800">Evening Snack</h2>
+                <button class="text-teal-500 text-2xl" onclick="toggleMeal('eveningSnack')">+</button>
+            </div>
+            <div id="eveningSnack" class="meal-content hidden">
+                <input type="text" id="eveningSnackSearch" placeholder="Search food..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mb-4" oninput="filterOptions('eveningSnack')">
+                <div id="eveningSnackOptions" class="meal-options space-y-3"></div>
+            </div>
+        </div>
+
+        <div class="meal-option">
+            <div class="flex items-center justify-between">
+                <h2 class="text-md text-gray-800">Dinner</h2>
+                <button class="text-teal-500 text-2xl" onclick="toggleMeal('dinner')">+</button>
+            </div>
+            <div id="dinner" class="meal-content hidden">
+                <input type="text" id="dinnerSearch" placeholder="Search food..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mb-4" oninput="filterOptions('dinner')">
+                <div id="dinnerOptions" class="meal-options space-y-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+
+    
+<footer class="bg-white border-t  text-sm text-gray-700 mt-20">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    
+ 
+    <div class="space-y-4">
+      <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" class="h-10">
+      
+    </div>
+
+   
+    <div class="md:col-span-2 space-y-4">
+      <div>
+        <h4 class="font-semibold">Address</h4>
+        <p>Singapore: ababab Private Limited<br>
+        20 Bendemeer Road, #03–12 BS Bendemeer Centre, Singapore 339914</p>
+        <br>
+        <p>Malaysia: Suite 28-1, Level 28, Vertical Corporate Tower B,<br>
+        Avenue 10, The Vertical, Bangsar South City,<br>
+        8 Jalan Kerinchi, 59200 Kuala Lumpur</p>
+      </div>
+      <div>
+        <h4 class="font-semibold">Contact</h4>
+        <p>18004199501</p>
+        <p><a href="mailto:support@ababab.com" class="hover:underline">support@ababab.com</a></p>
+      </div>
+    </div>
+
+  
+    <div class="space-y-2">
+      <h4 class="font-semibold">Quick Links</h4>
+      <ul class="space-y-1">
+        <li><a href="#" class="hover:text-teal-600">Our App</a></li>
+        <li><a href="#" class="hover:text-teal-600">Blog</a></li>
+        <li><a href="#" class="hover:text-teal-600">Our Team</a></li>
+        <li><a href="#" class="hover:text-teal-600">Careers</a></li>
+        <li><a href="#" class="hover:text-teal-600">Annual Filing Report</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <hr class="my-6 border-gray-200">
+
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+    <div class="flex items-center space-x-3">
+      <span class="font-semibold text-gray-700">Follow Us</span>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-facebook"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-instagram"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-youtube"></i></a>
+    </div>
+    <p class="text-center text-gray-500">Copyright © ababab Wellness Private Limited</p>
+  </div>
+
+
+  <div class="bg-[#18b955] py-4">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+      <p class="text-center text-sm">Redefine fitness with AI Coach Ria & abababa. Talk to us to learn more!</p>
+      
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  const sampleFoods = [
+        { name: "Idli", calories: 60, protein: 2, carbs: 12, fat: 0.5, fiber: 0.6, unit: "piece" },
+        { name: "Dosa", calories: 160, protein: 3, carbs: 25, fat: 4, fiber: 1, unit: "piece" },
+        { name: "Chapati", calories: 100, protein: 2, carbs: 18, fat: 1, fiber: 2, unit: "piece" }
+    ];
+
+    const meals = ["breakfast", "lunch", "eveningSnack", "dinner"];
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalCarbs = 0;
+    let totalFat = 0;
+    let totalFiber = 0;
+
+    meals.forEach(meal => loadFoodOptions(meal));
+
+    function loadFoodOptions(meal) {
+        const container = document.getElementById(`${meal}Options`);
+        container.innerHTML = "";
+
+        sampleFoods.forEach((food, index) => {
+            container.appendChild(createFoodOption(meal, food, index));
+        });
+    }
+
+    function createFoodOption(meal, food, index) {
+        const option = document.createElement("div");
+        option.className = "flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gray-50 p-3 rounded border";
+
+        const units = ['piece', 'cup', 'spoon', 'tbsp', 'g'];
+        const unitSelect = units.map(unit => `<option value="${unit}" ${unit === food.unit ? 'selected' : ''}>${unit}</option>`).join('');
+
+        option.innerHTML = `
+            <div>
+                <p class="font-semibold text-gray-700">${food.name}</p>
+                <p class="text-sm text-gray-500">${food.calories} kcal</p>
+            </div>
+            <div class="flex items-center space-x-2 mt-2 sm:mt-0">
+                <input type="number" min="1" value="1" class="w-16 px-2 py-1 border rounded text-sm" id="${meal}_qty_${index}">
+                <select id="${meal}_unit_${index}" class="px-2 py-1 border rounded text-sm">
+                    ${unitSelect}
+                </select>
+                <button class="bg-[#21695c] text-white text-sm px-3 py-1 rounded" onclick="addFood('${meal}', ${index})">Add</button>
+            </div>
+        `;
+        return option;
+    }
+
+    function filterOptions(meal) {
+        const search = document.getElementById(`${meal}Search`).value.toLowerCase();
+        const container = document.getElementById(`${meal}Options`);
+        container.innerHTML = "";
+
+        sampleFoods.filter(f => f.name.toLowerCase().includes(search)).forEach((food, index) => {
+            container.appendChild(createFoodOption(meal, food, index));
+        });
+    }
+
+    function toggleMeal(meal) {
+        document.getElementById(meal).classList.toggle("hidden");
+    }
+
+    function addFood(meal, index) {
+        const qty = parseFloat(document.getElementById(`${meal}_qty_${index}`).value) || 1;
+        const food = sampleFoods[index];
+
+        totalCalories += food.calories * qty;
+        totalProtein += food.protein * qty;
+        totalCarbs += food.carbs * qty;
+        totalFat += food.fat * qty;
+        totalFiber += food.fiber * qty;
+
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById("caloriesEaten").textContent = Math.round(totalCalories);
+        document.getElementById("proteinValue").textContent = Math.round(totalProtein) + "g";
+        document.getElementById("carbsValue").textContent = Math.round(totalCarbs) + "g";
+        document.getElementById("fatValue").textContent = Math.round(totalFat) + "g";
+        document.getElementById("fiberValue").textContent = Math.round(totalFiber) + "g";
+        updateCaloriesProgress();
+    }
+
+    function updateCaloriesProgress() {
+        const goal = parseFloat(document.getElementById("caloriesGoal").textContent);
+        const percent = Math.min((totalCalories / goal) * 100, 100);
+        document.getElementById("caloriesProgress").style.width = `${percent}%`;
+    }
+
+
+</script>
+
+
+    <script src="./static/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="./static/css/style.css">
+
+  </head>
+
+  <body>
+
+      <div class="flex justify-between items-center h-0 p-4 bg-[#18b955]">
+
+    </div>
+
+    <div class=" text-black text-center p-2 text-sm">
+      Our <a href="#" class="text-blue-700 underline">Terms of Service</a> and
+      <a href="#" class="text-blue-700 underline">Privacy Policy</a> have
+      recently been updated
+    </div>
+
+  
+    <header class="bg-[#18b955] text-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+         
+         <div class="flex-shrink-0">
+  <a href="index.html">
+    <h1 class="text-lg font-bold">
+      myfitness<sup class="text-xs align-top">®</sup>
+    </h1>
+  </a>
+</div>
+
+
+        
+          <div>
+            <button id="mobile-menu-button" class="focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+   
+    <div id="mobile-menu"
+      class="fixed top-0 right-0 h-full w-64 bg-[#18b955] text-white 
+            transform translate-x-full transition-transform duration-300 z-[9999] ">
+      <div class="flex flex-col px-6 py-6 space-y-4">
+        <button id="close-menu"
+          class="self-end text-white text-2xl focus:outline-none">&times;</button>
+        <a href="index.html" class="hover:text-orange-200">Home</a>
+        <a href="diet.html" class="hover:text-orange-200">Diet Plan</a>
+        <a href="workouts.html" class="hover:text-orange-200">Workouts</a>
+        <a href="calorie.html" class="hover:text-orange-200">Calorie
+          Tracker</a>
+        <a href="progress.html" class="hover:text-orange-200 active">Progress
+          Tracker</a>
+       <a href="routine.html" class="hover:text-orange-200">Routine</a>
+        <a href="profile.html" class="hover:text-orange-200">Profile</a>
+       
+      </div>
+    </div>
+  
+    
+
+
+<section class="bg-white p-6  mt-10 max-w-6xl mx-auto">
+  <h2 class="text-4xl  text-gray-800 mb-6 text-left">Progress Summary</h2>
+  
+  <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-20 mt-20">
+    
+  
+    <div class="grid grid-cols-2 gap-4 w-full md:w-1/2 self-center">
+      <div class="p-4 rounded-lg shadow bg-green-50 text-center">
+        <p class="text-3xl font-bold text-green-600">68kg</p>
+        <p class="text-gray-600 text-sm">Current Weight</p>
+      </div>
+      <div class="p-4 rounded-lg shadow bg-red-50 text-center">
+        <p class="text-3xl font-bold text-red-500">75kg</p>
+        <p class="text-gray-600 text-sm">Starting Weight</p>
+      </div>
+      <div class="p-4 rounded-lg shadow bg-blue-50 text-center">
+        <p class="text-3xl font-bold text-blue-600">65kg</p>
+        <p class="text-gray-600 text-sm">Goal Weight</p>
+      </div>
+      <div class="p-4 rounded-lg shadow bg-yellow-50 text-center">
+        <p class="text-3xl font-bold text-yellow-500">7kg</p>
+        <p class="text-gray-600 text-sm">Total Lost</p>
+      </div>
+    </div>
+
+     
+
+  <div id="chartContainer">
+    <canvas id="weightChart"></canvas>
+  </div>
+
+
+
+  </div>
+</section>
+
+
+<section class="bg-white p-6mt-10 max-w-6xl mx-auto">
+  <h2 class="text-2xl text-gray-800 mb-4">Achievements</h2>
+ <ul class="text-gray-700 space-y-2">
+  <li class="flex items-center">
+    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+    Lost first 5kg
+  </li>
+  <li class="flex items-center">
+    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+    Completed 30 days of activity
+  </li>
+  <li class="flex items-center">
+    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+    Met daily protein goals for 7 days
+  </li>
+</ul>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="bg-white border-t  text-sm text-gray-700 mt-20">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    
+ 
+    <div class="space-y-4">
+      <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" class="h-10">
+      
+    </div>
+
+   
+    <div class="md:col-span-2 space-y-4">
+      <div>
+        <h4 class="font-semibold">Address</h4>
+        <p>Singapore: ababab Private Limited<br>
+        20 Bendemeer Road, #03–12 BS Bendemeer Centre, Singapore 339914</p>
+        <br>
+        <p>Malaysia: Suite 28-1, Level 28, Vertical Corporate Tower B,<br>
+        Avenue 10, The Vertical, Bangsar South City,<br>
+        8 Jalan Kerinchi, 59200 Kuala Lumpur</p>
+      </div>
+      <div>
+        <h4 class="font-semibold">Contact</h4>
+        <p>18004199501</p>
+        <p><a href="mailto:support@ababab.com" class="hover:underline">support@ababab.com</a></p>
+      </div>
+    </div>
+
+  
+    <div class="space-y-2">
+      <h4 class="font-semibold">Quick Links</h4>
+      <ul class="space-y-1">
+        <li><a href="#" class="hover:text-teal-600">Our App</a></li>
+        <li><a href="#" class="hover:text-teal-600">Blog</a></li>
+        <li><a href="#" class="hover:text-teal-600">Our Team</a></li>
+        <li><a href="#" class="hover:text-teal-600">Careers</a></li>
+        <li><a href="#" class="hover:text-teal-600">Annual Filing Report</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <hr class="my-6 border-gray-200">
+
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+    <div class="flex items-center space-x-3">
+      <span class="font-semibold text-gray-700">Follow Us</span>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-facebook"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-instagram"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-youtube"></i></a>
+    </div>
+    <p class="text-center text-gray-500">Copyright © ababab Wellness Private Limited</p>
+  </div>
+
+
+  <div class="bg-[#18b955] py-4">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+      <p class="text-center text-sm">Redefine fitness with AI Coach Ria & abababa. Talk to us to learn more!</p>
+      
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const ctx = document.getElementById('weightChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [
+            {
+              label: 'Weight (kg)',
+              data: [75, 73, 70, 68],
+              borderColor: '#10B981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0,
+              pointRadius: 4,
+              pointBackgroundColor: '#10B981'
+            },
+            {
+              label: 'BMI',
+              data: [27.5, 26.8, 25.5, 24.8],
+              borderColor: '#6366F1',
+              backgroundColor: 'rgba(99, 102, 241, 0.1)',
+              tension: 0,
+              pointRadius: 4,
+              pointBackgroundColor: '#6366F1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: false,
+              grid: { color: '#e5e7eb' }
+            },
+            x: {
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                font: { size: 13 },
+                color: '#374151'
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+    <script src="./static/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+font-family: 'Poppins', sans-serif;}
+
+html{
+  overflow-x: hidden;
+}
+
+.rainbow-glow {
+  display: inline-block;
+  padding: 2px;
+  position: relative;
+  border-radius: 25px;
+}
+
+
+
+.rainbow-glow .card {
+  padding: 1px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 25px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+.rainbow-glow .card::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 200%;
+  right: -50%;
+  bottom: -50%;
+  top: -50%;
+  background-position: center center;
+  background-image: conic-gradient(from 0 at 50% 50%, transparent 50%, #fff845, #1cc98c, #24cbde, #57a9f7, #bd52f9, #ebb347);
+  animation: rainbowRotate 4s linear infinite;
+  z-index: 0;
+}
+
+.rainbow-glow .content {
+  padding: 3rem;
+  background: black;
+
+  border-radius: 25px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes rainbowRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rainbowGlowRotate {
+  0% { transform: rotate(0deg) scale(0.3); }
+  50% { transform: rotate(180deg) scale(0.3); }
+  100% { transform: rotate(360deg) scale(0.3); }
+}
+
+
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-beat {
+  animation: beat 1s infinite;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+  .closing {
+        animation: slide-up 0.5s forwards;
+      }
+
+      @keyframes slide-up {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-100%);
+        }
+      }
+
+      .open {
+        animation: slide-down 0.5s forwards;
+      }
+
+      @keyframes slide-down {
+        0% {
+          transform: translateY(100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .slide-up {
+        animation: slide-up 0.5s forwards;
+      }
+
+      .tab-btn {
+        border-bottom: 2px solid transparent;
+        padding-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+    .tab-btn:hover {
+    border-color: #f97316; /* Tailwind's orange-500 color */
+}
+
+      .submit-btn {
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .submit-btn:hover {
+        background-color: white;
+      }
+
+      .input-field {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        border-radius: 5px;
+      }
+
+    
+      #backArrow {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    padding: 0;
+}
+/* Tab Button Styles */
+.tab-button {
+    transition: background-color 0.3s ease;
+}
+.tab-button:hover {
+    background-color: #145a46;
+}
+
+/* Category Content Visibility */
+.hidden {
+    display: none;
+}
+
+/* Workout GIF container */
+.gif-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.workout-gif {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+    #chartContainer {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      margin: auto;
+    }
+ 
+
+  .active{
+    background-color: white;
+    color:#21695c;
+    padding-left: 4px;
+    padding-top:2px;
+    padding-bottom:2px;
+  }
+
+
+ .calendar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.calendar-week {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+.calendar-day.completed {
+    background-color: #18b955;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .calendar-day {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .calendar-container {
+        max-width: 80%; /* Adjust this percentage as needed */
+    }
+
+    .calendar-week {
+        gap: 12px; /* Adjust spacing between days for larger screens */
+    }
+
+    .calendar-day {
+        width: 50px; /* Increase the size of each day on larger screens */
+        height: 50px;
+    }
+}

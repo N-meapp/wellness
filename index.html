@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="./static/css/style.css">
+
+  </head>
+
+  <body>
+
+    <div class="flex justify-between items-center h-0 p-4 bg-[#18b955]">
+
+    </div>
+
+   
+
+  
+    <header class="bg-[#18b955] text-white fixed top-0 left-0 w-full z-[999]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <h1 class="text-lg font-bold">
+            myfitness<sup class="text-xs align-top">®</sup>
+          </h1>
+        </a>
+      </div>
+      <div>
+        <button id="mobile-menu-button" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+   
+   <div id="mobile-menu"
+  class="fixed top-0 right-0 h-full w-64 bg-[#18b955] text-white 
+        transform translate-x-full transition-transform duration-300 z-[9999]">
+
+      <div class="flex flex-col px-6 py-6 space-y-4">
+        <button id="close-menu"
+          class="self-end text-white text-2xl focus:outline-none">&times;</button>
+        <a href="index.html" class="hover:text-orange-200 active">Home</a>
+        <a href="diet.html" class="hover:text-orange-200">Diet Plan</a>
+        <a href="workouts.html" class="hover:text-orange-200">Workouts</a>
+        <a href="calorie.html" class="hover:text-orange-200">Calorie
+          Tracker</a>
+        <a href="progress.html" class="hover:text-orange-200">Progress
+          Tracker</a>
+        <a href="routine.html" class="hover:text-orange-200">Routine</a>
+        <a href="profile.html" class="hover:text-orange-200">Profile</a>
+       
+      </div>
+    </div>
+
+    <div class="px-6 xl:px-24 w-full h-auto">
+      <div
+        class="max-w-[1200px] mx-auto flex flex-col xl:flex-row justify-between gap-10 mt-32 max-md:mt-[6rem]">
+
+   
+        <div class="w-full h-full px-6 self-center">
+          <p class="text-sm mb-2 uppercase tracking-wide text-black">Wellness
+            starts here</p>
+          <h1 class="text-4xl md:text-5xl font-medium mb-4 leading-[1.4rem] max-md:leading-[2.8rem]">
+            Track. Improve. <span class="text-[#18b955]">Thrive.</span>
+          </h1>
+
+          <p class="mb-6 text-black text-lg mt-6">
+            Your all-in-one tool for healthy living — log meals, workouts,
+            water, and more. Personalized insights, real results.
+          </p>
+
+          <button
+            class="text-[#18b955] px-6 py-3 rounded-full font-semibold bg-orange-100 transition mt-4"
+            id="startQuizBtn">
+            Start a quick Quiz →
+          </button>
+
+          
+          <div id="quizContainer" class="hidden">
+            <div id="questionModal"
+              class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div
+                class="bg-white p-6 rounded-lg w-96 min-h-[200px] relative overflow-y-auto">
+                <span class="absolute top-2 right-2 text-xl cursor-pointer"
+                  id="closeModal">&times;</span>
+                <form id="quizForm" onsubmit="return nextQuestion(event)">
+                  <div id="modalBody" style="margin-top:2rem;"></div>
+                  <button type="submit"
+                    class="mt-4 w-full bg-[#18b955] text-white py-2 rounded-md">
+                    Continue
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+<!-- Result Modal -->
+<div id="resultModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-[9999]">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl text-center relative">
+    <button id="closeResultModal" class="absolute top-2 right-4 text-gray-600 text-xl font-bold">&times;</button>
+    <div id="resultContent">
+      <!-- Calorie result will be injected here -->
+    </div>
+  </div>
+</div>
+<!-- Create Account Modal -->
+<div id="createAccountModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-[9999]">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl text-center relative">
+    <button id="closeCreateAccountModal" class="absolute top-2 right-4 text-gray-600 text-xl font-bold">&times;</button>
+    <h2 class="text-2xl font-bold mb-4">Create Account</h2>
+    <form id="createAccountForm" onsubmit="return createAccount(event)">
+      <label for="username" class="block">Username:</label>
+      <input type="text" id="username" name="username" class="w-full p-2 mt-2 border rounded-md" required>
+      
+      <label for="password" class="block mt-4">Password:</label>
+      <input type="password" id="password" name="password" class="w-full p-2 mt-2 border rounded-md" required>
+      
+      <button type="submit" class="mt-4 w-full bg-[#18b955] text-white py-2 rounded-md">
+        Create Account
+      </button>
+    </form>
+  </div>
+</div>
+
+       
+        <div
+          class="relative w-full h-full flex justify-center items-center overflow-hidden">
+          <img src="./static/images/fud.png"
+            class="absolute -left-28 xl:left-[-158]" alt="Food Graphic" />
+          <img src="./static/images/phone.png" alt="Fitness App Preview"
+            class="max-w-sm rounded-2xl  border border-white/20 z-50" />
+        </div>
+
+      </div>
+    </div>
+
+    <section class="bg-[#f7f7f7] py-16 mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl text-[#18b955]">About Us</h2>
+          <p class="text-sm text-gray-600 mt-4">Your ultimate partner in
+            fitness, wellness, and a healthy lifestyle.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+          <div class="flex justify-center items-center">
+            <img src="./static/images/about.jpg" alt="Fitness App Image"
+              class="w-full h-auto max-w-md rounded-lg ">
+          </div>
+
+          <div class="text-center md:text-left content-center">
+            <p class="text-md text-gray-700 mb-6">
+              At MyFitnessPal, we are passionate about helping individuals lead
+              healthier, more active lives. Our app offers an all-in-one
+              platform where you can track your workouts, meals, calories, and
+              wellness progress. With personalized fitness plans, expert
+              guidance, and real-time tracking, we ensure that you stay
+              motivated and achieve your health goals.
+            </p>
+            <p class="text-md text-gray-700 mb-6">
+              Whether you're a beginner or a fitness enthusiast, our app is
+              designed to support you every step of the way, offering tools that
+              make it easy to integrate fitness and wellness into your daily
+              routine. Together, we can make every step towards a healthier
+              lifestyle enjoyable and rewarding.
+            </p>
+
+            <div class="mt-6 ">
+              <a href="/get-started"
+                class="bg-[#18b955] text-white px-6 py-3 rounded-full  hover:bg-[#145f47] transition">Get
+                Started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+<div id="services">
+
+</div>
+
+ <div class="text-center mb-12 mt-10">
+          <h2 class="text-4xl text-[#18b955]">What we offer</h2>
+         
+        </div>
+<div class="w-full flex flex-wrap justify-center md:justify-between gap-6 px-4 md:px-10 mt-10">
+
+  <a href="diet.html" class="block w-full md:w-auto">
+    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
+      <h1 class="text-white text-2xl font-semibold">Diet Plan</h1>
+    </div>
+  </a>
+
+  <a href="workouts.html" class="block w-full md:w-auto">
+    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
+      <h1 class="text-white text-2xl">Workouts</h1>
+    </div>
+  </a>
+
+  <a href="calorie.html" class="block w-full md:w-auto">
+    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
+      <h1 class="text-white text-2xl">Calorie Tracker</h1>
+    </div>
+  </a>
+
+  <a href="progress.html" class="block w-full md:w-auto">
+    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
+      <h1 class="text-white text-2xl">Progress Tracker</h1>
+    </div>
+  </a>
+
+  <a href="routine.html" class="block w-full md:w-auto">
+    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
+      <h1 class="text-white text-2xl">Routine</h1>
+    </div>
+  </a>
+
+</div>
+
+
+
+
+
+
+
+
+    
+    <section class="py-12 mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl  text-center text-[#18b955] mb-8">Why
+          Choose Us?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+
+          
+          <div class="bg-white p-6 rounded-lg  text-center" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;">
+            <div class="mb-4 text-[#18b955]">
+             <i class="fi fi-tr-hr-person text-2xl"></i>
+
+            </div>
+            <h3 class="text-xl  text-[#333] mb-2">Personalized
+              Fitness Plans</h3>
+            <p class="text-gray-600 text-sm mt-4">Custom workouts that adapt to your fitness
+              goals, ensuring continuous progress.</p>
+          </div>
+
+          
+          <div class="bg-white p-6 rounded-lg  text-center"style="box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;">
+            <div class="mb-4 text-[#18b955]">
+             <i class="fi fi-ts-scale text-2xl "></i>
+            </div>
+            <h3 class="text-xl  text-[#333] mb-2">Meal and Diet
+              <br>Tracking</h3>
+            <p class="text-gray-600 text-sm mt-4">Log your meals, track calories, and
+              maintain a balanced diet to fuel your fitness journey.</p>
+          </div>
+
+    
+          <div class="bg-white p-6 rounded-lg  text-center"style="box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;">
+            <div class="mb-4 text-[#18b955]">
+              <i class="fi fi-tr-career-growth text-2xl"></i>
+            </div>
+            <h3 class="text-xl  text-[#333] mb-2">Real-time
+              Progress Monitoring</h3>
+            <p class="text-gray-600 text-sm mt-4">Track your fitness progress in real time
+              and set achievable goals to stay motivated.</p>
+          </div>
+
+     
+          <div class="bg-white p-6 rounded-lg  text-center"style="box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;">
+            <div class="mb-4 text-[#18b955]">
+              <i class="fi fi-tr-meditation text-2xl"></i>
+            </div>
+            <h3 class="text-xl  text-[#333] mb-2">In-App Meditation
+              & Wellness</h3>
+            <p class="text-gray-600 text-sm mt-4">Access guided meditation to reduce stress and improve mental health.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+ <section class="w-full mx-auto px-4 py-16 bg-[#f7f7f7] ">
+    <h2 class="text-4xl  text-center text-gray-900 mb-6">Frequently Asked <span class="text-[#18b955]">Questions</span></h2>
+    <p class="text-center text-sm text-gray-600 mb-10">Get answers to your most common questions about our services, products, and support.</p>
+
+    <div class="space-y-4 max-w-4xl  mx-auto ">
+   
+      <div class="border rounded-lg overflow-hidden">
+        <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-white hover:bg-[#707e7b] hover:bg-opacity-20 transition" onclick="toggleFAQ(this)">
+          <span class=" text-gray-900">What makes our boutique unique?</span>
+          <svg class="w-5 h-5 text-[gray-500] transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="hidden px-6 pb-4 text-gray-600  text-sm">
+          We blend trend-focused styles with eco-conscious materials and personalized service for a better shopping experience.
+        </div>
+      </div>
+
+   
+      <div class="border rounded-lg overflow-hidden">
+        <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-white hover:bg-[#707e7b] hover:bg-opacity-20  transition" onclick="toggleFAQ(this)">
+          <span class=" text-gray-900">Do you offer outfit recommendations?</span>
+          <svg class="w-5 h-5 text-[gray-500] transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="hidden px-6 pb-4 text-gray-600 text-sm">
+          Yes, we provide outfit suggestions based on occasions, seasons, and your style preferences.
+        </div>
+      </div>
+
+    
+      <div class="border rounded-lg overflow-hidden">
+        <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-white hover:bg-[#707e7b] hover:bg-opacity-20  transition" onclick="toggleFAQ(this)">
+          <span class=" text-gray-900">How do you ensure product quality?</span>
+          <svg class="w-5 h-5 text-[gray-500] transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="hidden px-6 pb-4 text-gray-600  text-sm">
+          All products are hand-checked for quality before shipping and sourced from trusted brands.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+    
+
+
+
+
+
+<footer class="bg-white border-t  text-sm text-gray-700">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    
+ 
+    <div class="space-y-4">
+      <img src="" alt="Logo" class="h-10">
+      
+    </div>
+
+   
+    <div class="md:col-span-2 space-y-4">
+      <div>
+        <h4 class="font-semibold">Address</h4>
+        <p>Singapore: ababab Private Limited<br>
+        20 Bendemeer Road, #03–12 BS Bendemeer Centre, Singapore 339914</p>
+        <br>
+        <p>Malaysia: Suite 28-1, Level 28, Vertical Corporate Tower B,<br>
+        Avenue 10, The Vertical, Bangsar South City,<br>
+        8 Jalan Kerinchi, 59200 Kuala Lumpur</p>
+      </div>
+      <div>
+        <h4 class="font-semibold">Contact</h4>
+        <p>18004199501</p>
+        <p><a href="mailto:support@ababab.com" class="hover:underline">support@ababab.com</a></p>
+      </div>
+    </div>
+
+  
+    <div class="space-y-2">
+      <h4 class="font-semibold">Quick Links</h4>
+      <ul class="space-y-1">
+        <li><a href="#" class="hover:text-teal-600">Our App</a></li>
+        <li><a href="#" class="hover:text-teal-600">Blog</a></li>
+        <li><a href="#" class="hover:text-teal-600">Our Team</a></li>
+        <li><a href="#" class="hover:text-teal-600">Careers</a></li>
+        <li><a href="#" class="hover:text-teal-600">Annual Filing Report</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <hr class="my-6 border-gray-200">
+
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+    <div class="flex items-center space-x-3">
+      <span class="font-semibold text-gray-700">Follow Us</span>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-facebook"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-instagram"></i></a>
+      <a href="#" class="text-teal-600 hover:text-teal-800"><i class="fi fi-brands-youtube"></i></a>
+    </div>
+    <p class="text-center text-gray-500">Copyright © ababab Wellness Private Limited</p>
+  </div>
+
+
+  <div class="bg-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+      <p class="text-center text-sm">Redefine fitness with AI Coach Ria & abababa. Talk to us to learn more!</p>
+      
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+    <script src="./static/js/script.js"></script>
+  </body>
+</html>
