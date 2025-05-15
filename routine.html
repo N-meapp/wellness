@@ -20,39 +20,31 @@
 
     </div>
 
-    <div class=" text-black text-center p-2 text-sm">
-      Our <a href="#" class="text-blue-700 underline">Terms of Service</a> and
-      <a href="#" class="text-blue-700 underline">Privacy Policy</a> have
-      recently been updated
-    </div>
+  
 
   
-    <header class="bg-[#18b955] text-white relative">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-         
-        <div class="flex-shrink-0">
-  <a href="index.html">
-    <h1 class="text-lg font-bold">
-      myfitness<sup class="text-xs align-top">®</sup>
-    </h1>
-  </a>
-</div>
-
-        
-          <div>
-            <button id="mobile-menu-button" class="focus:outline-none">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-        </div>
+       <header class="bg-[#18b955] text-white fixed top-0 left-0 w-full z-[999]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <h1 class="text-lg font-bold">
+            myfitness<sup class="text-xs align-top">®</sup>
+          </h1>
+        </a>
       </div>
-    </header>
+      <div>
+        <button id="mobile-menu-button" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
 
    
     <div id="mobile-menu"
@@ -85,18 +77,15 @@
 
 
 <div class="container mx-auto p-6">
-   
     <div class="bg-white rounded-lg p-8 max-md:p-0">
-        
-       
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-           
-            <div class="p-6 rounded-lg ">
+            <!-- Routine Form -->
+            <div class="p-6 rounded-lg">
                 <h2 class="text-2xl text-center text-black mb-4">Create Your Routine</h2>
                 <form id="routineForm">
-                    
+                    <!-- Goal -->
                     <div class="mb-4">
-                        <label for="goal" class="block text-sm  text-gray-700">Goal</label>
+                        <label for="goal" class="block text-sm text-gray-700">Goal</label>
                         <select id="goal" class="w-full p-2 border rounded-md shadow-sm" required>
                             <option value="weight_gain">Weight Gain</option>
                             <option value="weight_loss">Weight Loss</option>
@@ -104,49 +93,58 @@
                         </select>
                     </div>
 
-                   
+                    <!-- Profession -->
                     <div class="mb-4">
-                        <label for="work_start" class="block text-sm  text-gray-700">Work Start Time</label>
-                        <input type="time" id="work_start" class="w-full p-2 border rounded-md shadow-sm" required>
-                    </div>
-
-                  
-                    <div class="mb-4">
-                        <label for="work_end" class="block text-sm  text-gray-700">Work End Time</label>
-                        <input type="time" id="work_end" class="w-full p-2 border rounded-md shadow-sm" required>
-                    </div>
-
-                  
-                    <div class="mb-4">
-                        <label for="duration" class="block text-sm  text-gray-700">Routine Duration</label>
-                        <select id="duration" class="w-full p-2 border rounded-md shadow-sm" required>
-                            <option value="1">1 Month</option>
-                            <option value="2">2 Months</option>
+                        <label for="profession" class="block text-sm text-gray-700">Profession</label>
+                        <select id="profession" class="w-full p-2 border rounded-md shadow-sm" required>
+                            <option value="student">Student</option>
+                            <option value="it">IT Professional</option>
                         </select>
                     </div>
 
-                  
+                    <!-- Learning/Working Time -->
+                    <div class="mb-4">
+                        <label for="learn_start" class="block text-sm text-gray-700">Learning/Working Start Time</label>
+                        <input type="time" id="learn_start" class="w-full p-2 border rounded-md shadow-sm" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="learn_end" class="block text-sm text-gray-700">Learning/Working End Time</label>
+                        <input type="time" id="learn_end" class="w-full p-2 border rounded-md shadow-sm" required>
+                    </div>
+
+                    <!-- Routine Duration (Date Picker) -->
+                    <div class="mb-4">
+                        <label class="block text-sm text-gray-700">Routine Start Date</label>
+                        <input type="date" id="start_date" class="w-full p-2 border rounded-md shadow-sm" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm text-gray-700">Routine End Date</label>
+                        <input type="date" id="end_date" class="w-full p-2 border rounded-md shadow-sm" required>
+                    </div>
+
                     <button type="button" onclick="generateRoutine()" class="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600">Generate Routine</button>
                 </form>
             </div>
 
-           
-            <div id="routinePreview" class=" p-6 rounded-lg ">
+            <!-- Routine Preview -->
+            <div id="routinePreview" class="p-6 rounded-lg">
                 <h2 class="text-2xl text-center text-black mb-4">Your Goal-Based Routine</h2>
-                <div id="routinePreviewContent" class="text-sm text-gray-700">
-                 
-                </div>
+                <div id="routinePreviewContent" class="text-sm text-gray-700"></div>
             </div>
         </div>
 
-        <div id="routineTracker" class="p-6 rounded-lg" style="overflow-x: hidden;">
-    <h2 class="text-2xl text-center text-black mb-4">Routine Tracker</h2>
-    <div id="calendar" class="calendar-container flex flex-wrap justify-start gap-2 text-center w-full content-center" style="place-self:center;">
+        <!-- Routine Tracker -->
+        <div id="routineTracker" class="p-6 rounded-lg">
+            <h2 class="text-2xl text-center text-black mb-4">Routine Tracker</h2>
+            <div id="calendar" class="calendar-container flex flex-wrap justify-start gap-2 text-center w-full content-center"></div>
+        </div>
     </div>
 </div>
 
-    </div>
-</div>
+
+
 
 
 

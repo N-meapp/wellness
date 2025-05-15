@@ -20,39 +20,30 @@
 
     </div>
 
-    <div class=" text-black text-center p-2 text-sm">
-      Our <a href="#" class="text-blue-700 underline">Terms of Service</a> and
-      <a href="#" class="text-blue-700 underline">Privacy Policy</a> have
-      recently been updated
-    </div>
-
+    
   
-    <header class="bg-[#18b955] text-white relative">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-         
-        <div class="flex-shrink-0">
-  <a href="index.html">
-    <h1 class="text-lg font-bold">
-      myfitness<sup class="text-xs align-top">®</sup>
-    </h1>
-  </a>
-</div>
-
-        
-          <div>
-            <button id="mobile-menu-button" class="focus:outline-none">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-        </div>
+   <header class="bg-[#18b955] text-white fixed top-0 left-0 w-full z-[999]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <h1 class="text-lg font-bold">
+            myfitness<sup class="text-xs align-top">®</sup>
+          </h1>
+        </a>
       </div>
-    </header>
+      <div>
+        <button id="mobile-menu-button" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
 
    
     <div id="mobile-menu"
@@ -82,22 +73,69 @@
   <h1 class="text-4xl text-center text-gray-800 mb-8">Workouts</h1>
 
 
-  <div class="flex justify-center mb-8 space-x-4">
-    <button id="tab-weightGain" class="tab-button px-6 py-2 rounded-md bg-[#18b955] text-white  transition hover:bg-[#18b955]" onclick="showCategory('weightGain')">
-      Weight Gain
-    </button>
-    <button id="tab-weightLoss" class="tab-button px-6 py-2 rounded-md bg-gray-200 text-gray-800  transition hover:bg-[#e2e8f0]" onclick="showCategory('weightLoss')">
-      Weight Loss
-    </button>
-    <button id="tab-muscleGain" class="tab-button px-6 py-2 rounded-md bg-gray-200 text-gray-800 transition hover:bg-[#e2e8f0]" onclick="showCategory('muscleGain')">
-      Muscle Gain
-    </button>
-  </div>
+<div class="flex flex-wrap justify-center mb-8 gap-4">
+  <button id="tab-warmUp" 
+          class="tab-button w-40 min-w-[160px] py-2 rounded-md transition"
+          onclick="showCategory('warmUp')">
+    Warm-Up
+  </button>
+
+  <button id="tab-weightGain" 
+          class="tab-button w-40 min-w-[160px] py-2 rounded-md transition"
+          onclick="showCategory('weightGain')">
+    Weight Gain
+  </button>
+
+  <button id="tab-weightLoss" 
+          class="tab-button w-40 min-w-[160px] py-2 rounded-md transition"
+          onclick="showCategory('weightLoss')">
+    Weight Loss
+  </button>
+
+  <button id="tab-muscleGain" 
+          class="tab-button w-40 min-w-[160px] py-2 rounded-md transition"
+          onclick="showCategory('muscleGain')">
+    Muscle Gain
+  </button>
+
+  <button id="yourPlanBtn" 
+          class="w-40 min-w-[160px] py-2 rounded-md bg-[#092c17] text-white transition cursor-pointer"
+          onclick="showPlan()">
+    Your Workout Plan
+  </button>
+</div>
+
+
+
 
 
 <div id="workoutContent">
 
-  <!-- Weight Gain Workouts -->
+<div class="category-content warmUp hidden">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center mt-20">
+
+    <div class="text-center">
+      <img src="./static/images/workout4.gif" alt="Arm Circles" class="rounded-lg shadow w-48 h-48 object-cover">
+      <h3 class="mt-2 text-lg font-semibold text-gray-700">Arm Circles</h3>
+      <p class="text-sm text-gray-600">2 sets of 30 seconds</p>
+    </div>
+
+    <div class="text-center">
+      <img src="./static/images/workout5.gif" alt="Leg Swings" class="rounded-lg shadow w-48 h-48 object-cover">
+      <h3 class="mt-2 text-lg font-semibold text-gray-700">Leg Swings</h3>
+      <p class="text-sm text-gray-600">2 sets of 15 reps per leg</p>
+    </div>
+
+    <div class="text-center">
+      <img src="./static/images/workout6.gif" alt="Torso Twists" class="rounded-lg shadow w-48 h-48 object-cover">
+      <h3 class="mt-2 text-lg font-semibold text-gray-700">Torso Twists</h3>
+      <p class="text-sm text-gray-600">2 sets of 20 reps</p>
+    </div>
+
+  </div>
+</div>
+
+  
   <div class="category-content weightGain">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center mt-20">
 
@@ -122,7 +160,7 @@
     </div>
   </div>
 
-  <!-- Weight Loss Workouts -->
+  
   <div class="category-content weightLoss hidden">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center mt-20">
 
@@ -147,7 +185,7 @@
     </div>
   </div>
 
-  <!-- Muscle Gain Workouts -->
+
   <div class="category-content muscleGain hidden">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center mt-20">
 
@@ -173,6 +211,107 @@
   </div>
 
 </div>
+
+<div id="yourWorkoutPlan" class="hidden mt-12 px-4">
+  <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Your 3-Day Workout Plan</h2>
+
+
+  <div class="flex justify-center space-x-4 mb-4">
+    <button onclick="scrollPlan('left')" class="p-2 bg-gray-300 rounded hover:bg-gray-400">
+      &#8592;
+    </button>
+    <button onclick="scrollPlan('right')" class="p-2 bg-gray-300 rounded hover:bg-gray-400">
+      &#8594;
+    </button>
+  </div>
+
+
+  <div class="relative w-full overflow-hidden">
+    <div id="planScroll" class="flex transition-transform duration-500 ease-in-out " style="transform: translateX(0%);">
+     
+      <div class="w-full flex-shrink-0 px-4">
+        <div class="w-[90%] mx-auto bg-white  p-6">
+          <h3 class="text-2xl font-semibold text-gray-700 mb-4">Day 1: Full Body Warm-Up</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="text-center">
+              <img src="./static/images/workout4.gif" alt="Arm Circles" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Arm Circles</h4>
+              <p class="text-sm text-gray-600">2 sets of 30 seconds</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout5.gif" alt="Leg Swings" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Leg Swings</h4>
+              <p class="text-sm text-gray-600">2 sets of 15 reps</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout6.gif" alt="Torso Twists" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Torso Twists</h4>
+              <p class="text-sm text-gray-600">2 sets of 20 reps</p>
+            </div>
+            <button class="complete-btn w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-2 rounded">
+              Mark Day 1 as Complete
+            </button>
+          </div>
+        </div>
+      </div>
+
+  
+      <div class="w-full flex-shrink-0 px-4">
+        <div class="w-[90%] mx-auto bg-white  p-6">
+          <h3 class="text-2xl font-semibold text-gray-700 mb-4">Day 2: Strength Focus</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="text-center">
+              <img src="./static/images/workout1.gif" alt="Push-Ups" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Push-Ups</h4>
+              <p class="text-sm text-gray-600">3 sets of 15 reps</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout2.gif" alt="Deadlifts" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Deadlifts</h4>
+              <p class="text-sm text-gray-600">3 sets of 8 reps</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout3.gif" alt="Jumping Jacks" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Jumping Jacks</h4>
+              <p class="text-sm text-gray-600">3 sets of 30 seconds</p>
+            </div>
+            <button class="complete-btn w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-2 rounded">
+              Mark Day 2 as Complete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="w-full flex-shrink-0 px-4">
+        <div class="w-[90%] mx-auto bg-white  p-6">
+          <h3 class="text-2xl font-semibold text-gray-700 mb-4">Day 3: Cardio Boost</h3>
+           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="text-center">
+              <img src="./static/images/workout1.gif" alt="High Knees" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">High Knees</h4>
+              <p class="text-sm text-gray-600">3 sets of 40 seconds</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout3.gif" alt="Burpees" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Burpees</h4>
+              <p class="text-sm text-gray-600">3 sets of 10 reps</p>
+            </div>
+            <div class="text-center">
+              <img src="./static/images/workout2.gif" alt="Mountain Climbers" class="w-48 h-48 mx-auto rounded shadow">
+              <h4 class="mt-2 font-medium text-gray-700">Mountain Climbers</h4>
+              <p class="text-sm text-gray-600">3 sets of 30 seconds</p>
+            </div>
+            <button class="complete-btn w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-2 rounded">
+              Mark Day 3 as Complete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </div>
 

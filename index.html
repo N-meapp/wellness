@@ -9,7 +9,14 @@
       rel="stylesheet">
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
+
+
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+
     <link rel="stylesheet" href="./static/css/style.css">
 
   </head>
@@ -85,58 +92,19 @@
             water, and more. Personalized insights, real results.
           </p>
 
+
+          <a href ="#services">
           <button
             class="text-[#18b955] px-6 py-3 rounded-full font-semibold bg-orange-100 transition mt-4"
             id="startQuizBtn">
-            Start a quick Quiz →
+            Explore
           </button>
+          </a>
 
           
-          <div id="quizContainer" class="hidden">
-            <div id="questionModal"
-              class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-              <div
-                class="bg-white p-6 rounded-lg w-96 min-h-[200px] relative overflow-y-auto">
-                <span class="absolute top-2 right-2 text-xl cursor-pointer"
-                  id="closeModal">&times;</span>
-                <form id="quizForm" onsubmit="return nextQuestion(event)">
-                  <div id="modalBody" style="margin-top:2rem;"></div>
-                  <button type="submit"
-                    class="mt-4 w-full bg-[#18b955] text-white py-2 rounded-md">
-                    Continue
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
+         
         </div>
-<!-- Result Modal -->
-<div id="resultModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-[9999]">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl text-center relative">
-    <button id="closeResultModal" class="absolute top-2 right-4 text-gray-600 text-xl font-bold">&times;</button>
-    <div id="resultContent">
-      <!-- Calorie result will be injected here -->
-    </div>
-  </div>
-</div>
-<!-- Create Account Modal -->
-<div id="createAccountModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-[9999]">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl text-center relative">
-    <button id="closeCreateAccountModal" class="absolute top-2 right-4 text-gray-600 text-xl font-bold">&times;</button>
-    <h2 class="text-2xl font-bold mb-4">Create Account</h2>
-    <form id="createAccountForm" onsubmit="return createAccount(event)">
-      <label for="username" class="block">Username:</label>
-      <input type="text" id="username" name="username" class="w-full p-2 mt-2 border rounded-md" required>
-      
-      <label for="password" class="block mt-4">Password:</label>
-      <input type="password" id="password" name="password" class="w-full p-2 mt-2 border rounded-md" required>
-      
-      <button type="submit" class="mt-4 w-full bg-[#18b955] text-white py-2 rounded-md">
-        Create Account
-      </button>
-    </form>
-  </div>
-</div>
+
 
        
         <div
@@ -201,40 +169,58 @@
 
 </div>
 
- <div class="text-center mb-12 mt-10">
-          <h2 class="text-4xl text-[#18b955]">What we offer</h2>
-         
-        </div>
-<div class="w-full flex flex-wrap justify-center md:justify-between gap-6 px-4 md:px-10 mt-10">
 
-  <a href="diet.html" class="block w-full md:w-auto">
-    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
-      <h1 class="text-white text-2xl font-semibold">Diet Plan</h1>
+<div class="text-center my-12 mt-20">
+  <h2 class="text-4xl  text-[#18b955]">What We Offer</h2>
+  <p class="text-gray-600 mt-2 text-lg">Your complete wellness toolkit</p>
+</div>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-20">
+
+ 
+  <a href="diet.html" class="group bg-white rounded-xl  p-6 hover:shadow-xl transform transition duration-500 hover:-translate-y-2 text-center" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+    <div class="w-16 h-16 mx-auto mb-4 bg-[#18b955] text-white rounded-full flex items-center justify-center text-2xl">
+      <i class="fi fi-rs-salad"></i>
     </div>
+    <h3 class="text-xl  text-[#18b955]">Diet Plan</h3>
+    <p class="text-gray-600 mt-2">Personalized meal plans to support your goals.</p>
   </a>
 
-  <a href="workouts.html" class="block w-full md:w-auto">
-    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
-      <h1 class="text-white text-2xl">Workouts</h1>
+  <!-- Card -->
+  <a href="workouts.html" class="group bg-white rounded-xl p-6 hover:shadow-xl transform transition duration-500 hover:-translate-y-2 text-center" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+    <div class="w-16 h-16 mx-auto mb-4 bg-[#18b955] text-white rounded-full flex items-center justify-center text-2xl">
+      <i class="fi fi-rr-dumbbell-ray"></i>
     </div>
+    <h3 class="text-xl  text-[#18b955]">Workouts</h3>
+    <p class="text-gray-600 mt-2">Tailored exercises for every fitness level.</p>
   </a>
 
-  <a href="calorie.html" class="block w-full md:w-auto">
-    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
-      <h1 class="text-white text-2xl">Calorie Tracker</h1>
+  <!-- Card -->
+  <a href="calorie.html" class="group bg-white rounded-xl p-6 hover:shadow-xl transform transition duration-500 hover:-translate-y-2 text-center" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+    <div class="w-16 h-16 mx-auto mb-4 bg-[#18b955] text-white rounded-full flex items-center justify-center text-2xl">
+      <i class="fi fi-rr-flame"></i>
     </div>
+    <h3 class="text-xl  text-[#18b955]">Calorie Tracker</h3>
+    <p class="text-gray-600 mt-2">Keep an eye on your daily calorie intake.</p>
   </a>
 
-  <a href="progress.html" class="block w-full md:w-auto">
-    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
-      <h1 class="text-white text-2xl">Progress Tracker</h1>
+  <!-- Card -->
+  <a href="progress.html" class="group bg-white rounded-xl  p-6 hover:shadow-xl transform transition duration-500 hover:-translate-y-2 text-center" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+    <div class="w-16 h-16 mx-auto mb-4 bg-[#18b955] text-white rounded-full flex items-center justify-center text-2xl">
+      <i class="fi fi-rr-career-growth"></i>
     </div>
+    <h3 class="text-xl  text-[#18b955]">Progress Tracker</h3>
+    <p class="text-gray-600 mt-2">Visualize your fitness achievements.</p>
   </a>
 
-  <a href="routine.html" class="block w-full md:w-auto">
-    <div class="bg-[#18b955] w-full md:w-64 h-32 flex items-center justify-center rounded-md transform transition-transform duration-700 hover:translate-x-4">
-      <h1 class="text-white text-2xl">Routine</h1>
+  <!-- Card -->
+  <a href="routine.html" class="group bg-white rounded-xl  p-6 hover:shadow-xl transform transition duration-500 hover:-translate-y-2 text-center" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+    <div class="w-16 h-16 mx-auto mb-4 bg-[#18b955] text-white rounded-full flex items-center justify-center text-2xl">
+      <i class="fi fi-ss-time-forward"></i>
     </div>
+    <h3 class="text-xl  text-[#18b955]">Routine</h3>
+    <p class="text-gray-600 mt-2">Organize your daily health schedule.</p>
   </a>
 
 </div>

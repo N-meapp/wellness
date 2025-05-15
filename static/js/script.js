@@ -44,280 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  // questions
-let quizAnswers = {};
-let userSelections = {};
-let currentQuestion = 1;
-
-document.getElementById("startQuizBtn").addEventListener("click", function () {
-    document.getElementById("quizContainer").classList.remove("hidden");
-    showQuestion(1);
-});
-
-document.getElementById("closeModal").onclick = function () {
-    document.getElementById("questionModal").style.display = "none";
-};
-
-function nextQuestion(event) {
-    event.preventDefault();
-
-    const input = document.querySelector("#modalBody input, #modalBody select");
-
-    if (input) {
-        const id = input.id || input.name;
-        if (input.type === "radio" || input.type === "checkbox") {
-            if (input.type === "radio") {
-                quizAnswers[`q${currentQuestion}`] = document.querySelector(`input[name='${input.name}']:checked`).value;
-                userSelections[input.name] = quizAnswers[`q${currentQuestion}`];
-            } else {
-                quizAnswers[`q${currentQuestion}`] = Array.from(document.querySelectorAll(`input[name='${input.name}']:checked`)).map(i => i.value);
-                userSelections[input.name] = quizAnswers[`q${currentQuestion}`];
-            }
-        } else {
-            quizAnswers[`q${currentQuestion}`] = input.value;
-            userSelections[id] = input.value;
-        }
-    }
-
-    if (currentQuestion < 9) {
-        showQuestion(currentQuestion + 1);
-    } else {
-        alert("You have completed the quiz!");
-        document.getElementById("questionModal").style.display = "none";
-        console.log("Quiz Answers:", quizAnswers);
-    }
-}
-
-function previousQuestion() {
-    if (currentQuestion > 1) {
-        showQuestion(currentQuestion - 1);
-    }
-}
-
-function showQuestion(questionNumber) {
-    let questionHTML = '';
-    let backArrowHTML = '';
-
-    if (questionNumber > 1) {
-        backArrowHTML = `
-            <button type="button" id="backArrow" class="absolute top-4 left-4 text-2xl " onclick="previousQuestion()">
-                &#8592;
-            </button>
-        `;
-    }
-
-    switch (questionNumber) {
-        case 1:
-            questionHTML = `<label>Name:</label>
-                <input type="text" id="name" class="w-full p-2 mt-2 border rounded-md" value="${userSelections.name || ''}" required>`;
-            break;
-        case 2:
-            questionHTML = `<label>Goal:</label>
-                <div class="space-y-2 mt-2">
-                    ${["Weight Gain", "Weight Loss", "Maintain Weight"].map(goal => `
-                        <label class="block">
-                            <input type="radio" name="goal" value="${goal}" ${userSelections.goal === goal ? "checked" : ""}> ${goal}
-                        </label>`).join('')}
-                </div>`;
-            break;
-        case 3:
-            questionHTML = `<label>Reasons:</label>
-                ${["Sports", "Underweight", "Health"].map(reason => `
-                    <label class="block">
-                        <input type="checkbox" name="reason" value="${reason}" ${userSelections.reason && userSelections.reason.includes(reason) ? "checked" : ""}> ${reason}
-                    </label>`).join('')}`;
-            break;
-        case 4:
-            questionHTML = `<label>Activity Level:</label>
-                <select id="activity" class="w-full p-2 mt-2 border rounded-md">
-                    ${["Active", "Less Active", "Sedentary"].map(opt => `
-                        <option value="${opt}" ${userSelections.activity === opt ? "selected" : ""}>${opt}</option>`).join('')}
-                </select>`;
-            break;
-        case 5:
-            questionHTML = `<label>Gender:</label>
-                <select id="gender" class="w-full p-2 mt-2 border rounded-md">
-                    ${["Male", "Female", "Other"].map(g => `
-                        <option value="${g}" ${userSelections.gender === g ? "selected" : ""}>${g}</option>`).join('')}
-                </select>`;
-            break;
-        case 6:
-            questionHTML = `<label>Date of Birth:</label>
-                <input type="date" id="dob" class="w-full p-2 mt-2 border rounded-md" onchange="calculateAge()" value="${userSelections.dob || ''}">
-                <label class="mt-4 block">Age:</label>
-                <input type="number" id="age" class="w-full p-2 border rounded-md bg-gray-100" value="${userSelections.age || ''}" readonly>`;
-            break;
-        case 7:
-            questionHTML = `<label>Height (cm):</label>
-                <input type="number" id="height" class="w-full p-2 mt-2 border rounded-md" value="${userSelections.height || ''}" required>`;
-            break;
-        case 8:
-            questionHTML = `<label>Current Weight (kg):</label>
-                <input type="number" id="currentWeight" class="w-full p-2 mt-2 border rounded-md" value="${userSelections.currentWeight || ''}" required>`;
-            break;
-        case 9:
-            questionHTML = `<label>Goal Weight (kg):</label>
-                <input type="number" id="goalWeight" class="w-full p-2 mt-2 border rounded-md bg-gray-100" readonly value="${userSelections.goalWeight || ''}">
-                <button type="button" class="mt-4 w-full bg-green-600 text-white py-2 rounded" onclick="calculateGoalWeight()">Calculate Goal Weight</button>
-                <button type="button" class="mt-2 w-full bg-blue-600 text-white py-2 rounded" onclick="finishQuiz()">Complete Quiz</button>`;
-            break;
-    }
-
-    if (questionNumber === 9) {
-        document.querySelector("button[type='submit']").classList.add("hidden");
-    }
-
-    document.getElementById("modalBody").innerHTML = backArrowHTML + questionHTML;
-    currentQuestion = questionNumber;
-}
-
-function calculateAge() {
-    const dob = document.getElementById("dob").value;
-    if (!dob) return;
-
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    if (
-        today.getMonth() < birthDate.getMonth() ||
-        (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
-    ) {
-        age--;
-    }
-
-    document.getElementById("age").value = age;
-    quizAnswers.q6 = dob;
-    userSelections.dob = dob;
-    userSelections.age = age;
-}
-
-function calculateGoalWeight() {
-    const heightInput = document.getElementById("height");
-    const height = heightInput ? parseFloat(heightInput.value) : parseFloat(userSelections.height);
-
-    const dob = userSelections.dob;
-    const goal = userSelections.goal || "Maintain Weight";
-
-    if (isNaN(height) || height < 50 || height > 300) {
-        alert("Enter valid height (50–300 cm)");
-        return;
-    }
-
-    if (!dob) {
-        alert("Date of birth missing.");
-        return;
-    }
-
-    userSelections.height = height;
-
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    if (
-        today.getMonth() < birthDate.getMonth() ||
-        (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
-    ) {
-        age--;
-    }
-
-    if (age < 5 || age > 120) {
-        alert("Enter valid age (5–120 years)");
-        return;
-    }
-
-    let goalWeight = height - 100;
-    if (goal === "Weight Gain") goalWeight *= 1.10;
-    else if (goal === "Weight Loss") goalWeight *= 0.90;
-
-    goalWeight = Math.round(goalWeight);
-    document.getElementById("goalWeight").value = goalWeight;
-    userSelections.goalWeight = goalWeight;
-    quizAnswers.goalWeight = goalWeight;
-}
-
-function finishQuiz() {
-    const currentWeight = parseFloat(userSelections.currentWeight);
-    const goalWeight = parseFloat(userSelections.goalWeight);
-    const ratePerDay = parseFloat(userSelections.rate); // This value must be assigned before calling finishQuiz()
-
-    const weightDiff = Math.abs(goalWeight - currentWeight);
-    const daysToGoal = Math.ceil(weightDiff / ratePerDay);
-    const today = new Date();
-    const goalDate = new Date(today.getTime() + (daysToGoal * 24 * 60 * 60 * 1000));
-
-    const formattedDate = goalDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-
-    const calorieGoal = 2330; // Placeholder
-    let action = goalWeight > currentWeight ? "Gain" : "Lose";
-
-    document.getElementById("questionModal").style.display = "none";
-
-    // Display the Create Account modal
-    document.getElementById("createAccountModal").classList.remove("hidden");
-
-    // Store result data temporarily
-    const resultData = {
-        calorieGoal: calorieGoal,
-        action: action,
-        weightDiff: weightDiff,
-        formattedDate: formattedDate
-    };
-
-    // Once the account is created, show the result modal
-    window.resultData = resultData;
-}
-
-function createAccount(event) {
-    event.preventDefault();
-    
-    // Get the username and password values
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    if (username && password) {
-        // You can send the data to the server here (for example, save it in the database)
-
-        // Close the Create Account modal
-        document.getElementById("createAccountModal").classList.add("hidden");
-
-        // Show the Result Modal
-        showResult();
-    }
-}
-
-function showResult() {
-    const resultData = window.resultData; // Get stored result data
-
-    const resultHTML = `
-        <div class="text-center mt-6 p-6 border rounded-lg shadow">
-            <h2 class="text-2xl font-bold text-[#18b955]">Congratulations!</h2>
-            <p class="mt-2">Your daily net calorie goal is:</p>
-            <h1 class="text-4xl font-bold mt-2">${resultData.calorieGoal}</h1>
-            <div class="mt-1">calories</div>
-            <p class="mt-4 font-semibold">With this plan, you should:</p>
-            <p class="text-lg font-bold">${resultData.action} ${resultData.weightDiff} kg by ${resultData.formattedDate}</p>
-          <button class="mt-6 bg-[#18b955] text-white px-4 py-2 rounded" onclick="goToServices()">
-            Explore MyFitnessPlan
-          </button>
-        </div>
-    `;
-
-    document.getElementById("resultContent").innerHTML = resultHTML;
-    document.getElementById("resultModal").classList.remove("hidden");
-
-    console.log("Final Answers:", quizAnswers);
-}
-
-
-
-function goToServices() {
-    document.getElementById("resultModal").classList.add("hidden");
-    setTimeout(() => {
-        window.location.href = 'index.html#services';
-    }, 300); // Wait a bit so modal closes smoothly
-}
-
-
+ 
 
 // faq
 
@@ -338,32 +65,93 @@ function goToServices() {
 
 // workouts
 
-
 function showCategory(category) {
-  // Hide all sections
-  document.querySelectorAll('.category-content').forEach(section => section.classList.add('hidden'));
+  // Hide all category content sections
+  document.querySelectorAll('.category-content').forEach(section => {
+    section.classList.add('hidden');
+  });
 
-  // Remove active background from all tabs
+  // Explicitly hide yourWorkoutPlan
+  const planSection = document.getElementById('yourWorkoutPlan');
+  if (planSection) {
+    planSection.classList.add('hidden');
+  }
+
+  // Reset all tab button styles
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.classList.remove('bg-[#18b955]', 'text-white');
     btn.classList.add('bg-gray-200', 'text-gray-800');
   });
 
-  // Show selected section
-  document.querySelector(`.${category}`).classList.remove('hidden');
+  // Show selected category content only if NOT yourWorkoutPlan
+  if (category !== 'yourWorkoutPlan') {
+    const content = document.querySelector(`.${category}`);
+    if (content) content.classList.remove('hidden');
+  }
 
-  // Highlight active tab
-  document.getElementById(`tab-${category}`).classList.add('bg-[#18b955]', 'text-white');
-  document.getElementById(`tab-${category}`).classList.remove('bg-gray-200', 'text-gray-800');
+  // Highlight the active tab
+  const activeTab = document.getElementById(`tab-${category}`);
+  if (activeTab) {
+    activeTab.classList.remove('bg-gray-200', 'text-gray-800');
+    activeTab.classList.add('bg-[#18b955]', 'text-white');
+  }
 }
 
-// Show default tab (Weight Gain)
+// On page load, default to warmUp
 document.addEventListener("DOMContentLoaded", () => {
-  showCategory('weightGain');
+  showCategory('warmUp');
 });
 
 
 
+  let currentIndex = 0;
+  const totalDays = 3;
+
+  function scrollPlan(direction) {
+    const container = document.getElementById("planScroll");
+    if (direction === 'left' && currentIndex > 0) {
+      currentIndex--;
+    } else if (direction === 'right' && currentIndex < totalDays - 1) {
+      currentIndex++;
+    }
+    container.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+function showPlan() {
+  // Hide all category sections
+  document.querySelectorAll('.category-content').forEach(section => section.classList.add('hidden'));
+
+  // Reset tab button styles
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.classList.remove('bg-[#18b955]', 'text-white');
+    btn.classList.add('bg-gray-200', 'text-gray-800');
+  });
+
+  // Show only the workout plan
+  const planSection = document.getElementById('yourWorkoutPlan');
+  if (planSection) {
+    planSection.classList.remove('hidden');
+  }
+
+  // Highlight the workout plan tab
+  const planTab = document.getElementById('tab-yourWorkoutPlan');
+  if (planTab) {
+    planTab.classList.remove('bg-gray-200', 'text-gray-800');
+    planTab.classList.add('bg-[#18b955]', 'text-white');
+  }
+}
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.complete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.textContent = "✓ Completed";
+        btn.classList.remove('bg-green-500');
+        btn.classList.add('bg-gray-400');
+        btn.disabled = true;
+      });
+    });
+  });
 
 
 
@@ -372,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // diet
-
 
 
 function generateDiet() {
@@ -386,90 +173,146 @@ function generateDiet() {
   const activity = document.getElementById("activity").value;
   const goal = document.getElementById("goal").value;
   const medical = document.getElementById("medical").value.toLowerCase();
+  const mealCount = parseInt(document.getElementById("mealCount").value);
 
+  const scheduleList = document.getElementById("dietSchedule");
+  const tipsList = document.getElementById("dietTips");
   const outputDiv = document.getElementById("outputDiet");
-  const outputList = document.getElementById("dietResults");
-  outputList.innerHTML = "";
 
-  const weightDiff = Math.abs(goalWeight - weight);
-  const weightDirection = goalWeight > weight ? "gain" : "lose";
+  scheduleList.innerHTML = "";
+  tipsList.innerHTML = "";
+
+  const calorieMap = {
+    3: [500, 700, 500],     // Breakfast, Lunch, Dinner
+    4: [400, 600, 400, 300],// + Snack
+    5: [350, 550, 350, 200, 200] // + Snack 1, Snack 2
+  };
 
   const meals = {
-    Vegetarian: ["Oats with banana & nuts", "Paneer salad wrap", "Dal + brown rice + veggies", "Fruit bowl or sprouts"],
-    "Non-Vegetarian": ["Egg white omelette + toast", "Grilled chicken wrap", "Chicken curry + rice + salad", "Boiled eggs or yogurt"],
-    Vegan: ["Smoothie with almond milk", "Tofu wrap", "Lentils + quinoa + greens", "Dry fruits or hummus with carrots"]
-  };
+  "Weight Loss": {
+    Vegetarian: [
+      "Oats porridge with chia seeds",
+      "Grilled veggie salad with lemon dressing",
+      "Moong dal + stir-fried greens",
+      "Cucumber sticks + hummus",
+      "Fruit-infused water + nuts"
+    ],
+    "Non-Vegetarian": [
+      "Boiled eggs + 1 slice whole grain toast",
+      "Grilled chicken salad with olive oil",
+      "Steamed fish + sautéed vegetables",
+      "Boiled egg whites",
+      "Greek yogurt (low fat)"
+    ],
+    Vegan: [
+      "Green smoothie (spinach, almond milk, banana)",
+      "Tofu salad with lemon vinaigrette",
+      "Lentils + brown rice + veggies",
+      "Mixed seeds + dates",
+      "Coconut water + fruit"
+    ]
+  },
+  "Weight Gain": {
+    Vegetarian: [
+      "Banana smoothie with peanut butter",
+      "Paneer wrap with whole wheat",
+      "Dal + ghee rice + veggies",
+      "Boiled potato + nuts",
+      "Milk with dry fruits"
+    ],
+    "Non-Vegetarian": [
+      "Omelette + cheese sandwich",
+      "Chicken curry + rice",
+      "Egg bhurji + paratha",
+      "Meat soup + toast",
+      "Milkshake with dates"
+    ],
+    Vegan: [
+      "Nut butter toast + banana",
+      "Tofu stir-fry + quinoa",
+      "Chickpea curry + rice",
+      "Trail mix + banana",
+      "Coconut milk smoothie"
+    ]
+  },
+  "Muscle Gain": {
+    Vegetarian: [
+      "Oats + whey + fruits",
+      "Soya chunks curry + chapati",
+      "Paneer bhurji + rice",
+      "Peanut butter + toast",
+      "Protein bar / milk"
+    ],
+    "Non-Vegetarian": [
+      "Eggs + toast + protein shake",
+      "Grilled chicken + sweet potato",
+      "Beef steak + salad",
+      "Boiled egg + banana",
+      "Protein shake"
+    ],
+    Vegan: [
+      "Oats + almond milk + flaxseeds",
+      "Lentil soup + quinoa",
+      "Tofu tikka + rice",
+      "Nuts + banana",
+      "Soy milk smoothie"
+    ]
+  }
+};
+
+
+  const mealLabels = ["Breakfast", "Lunch", "Dinner", "Snack 1", "Snack 2"];
+  const selectedMeals = meals[goal][dietType].slice(0, mealCount);
+  const selectedCalories = calorieMap[mealCount];
+
+  for (let i = 0; i < mealCount; i++) {
+scheduleList.innerHTML += `<li><strong>${mealLabels[i]}:</strong> ${selectedMeals[i]} <span class="text-sm text-gray-500">(${selectedCalories[i]} kcal)</span></li>`;
+  }
 
   const suggestions = {
     "Weight Loss": [
-      "Avoid sugary drinks and snacks",
-      "Stay hydrated",
-      "Eat small, frequent meals with vegetables and fiber",
-      "Track calories and portion sizes"
+      "Avoid sugary snacks and drinks",
+      "Stay hydrated with 2–3 liters of water",
+      "Eat fiber-rich veggies",
+      "Use smaller plates to manage portion sizes"
     ],
     "Weight Gain": [
-      "Add calorie-dense snacks like nuts and dried fruits",
-      "Include healthy fats like peanut butter, avocado, olive oil",
-      "Eat protein-rich foods like eggs, paneer, or tofu"
+      "Eat more calorie-dense snacks like nuts",
+      "Add healthy fats (avocado, olive oil)",
+      "Include protein-rich food (eggs, paneer, tofu)"
     ],
     "Muscle Gain": [
-      "Consume protein post workout (e.g., eggs, whey, tofu)",
-      "Eat every 3 hours including high-carb and high-protein meals",
-      "Strength training is essential with adequate sleep"
+      "Have protein post workout (eggs, whey, tofu)",
+      "Eat every 3 hours",
+      "Strength training is essential"
     ]
   };
 
-  if (medical.includes("diabetes")) {
-    suggestions["Special"] = [
-      "Avoid high sugar foods and refined carbs",
-      "Include fiber-rich veggies and whole grains",
-      "Choose low glycemic index foods like oats, quinoa, and barley"
-    ];
-  }
-
-  // Show Meals
-  const mealTimes = ["Breakfast", "Lunch", "Dinner", "Snack"];
-  meals[dietType].forEach((meal, i) => {
-    outputList.innerHTML += `<li><strong>${mealTimes[i]}:</strong> ${meal}</li>`;
-  });
-
-  // Show custom tips based on goal
+  // Add tips based on goal
   suggestions[goal].forEach(tip => {
-    outputList.innerHTML += `<li><strong>Tip:</strong> ${tip}</li>`;
+    tipsList.innerHTML += `<li>${tip}</li>`;
   });
 
-  // Add goal weight info
-  if (weight !== goalWeight) {
-    outputList.innerHTML += `<li><strong>Goal:</strong> You want to ${weightDirection} ${weightDiff} kg to reach ${goalWeight} kg.</li>`;
-  } else {
-    outputList.innerHTML += `<li><strong>Goal:</strong> You're already at your goal weight!</li>`;
+  // Medical tips
+  if (medical.includes("diabetes")) {
+    tipsList.innerHTML += `<li class="font-semibold mt-2">Special Tips for Diabetes:</li>`;
+    [
+      "Avoid refined carbs and sugary foods",
+      "Eat low GI foods (oats, barley, quinoa)",
+      "Add fiber-rich vegetables"
+    ].forEach(tip => {
+      tipsList.innerHTML += `<li>${tip}</li>`;
+    });
   }
 
-// Special conditions
-if (suggestions["Special"]) {
-  suggestions["Special"].forEach(tip => {
-    outputList.innerHTML += `<li><strong>Health Tip:</strong> ${tip}</li>`;
-  });
+  // Add goal summary
+  const diff = Math.abs(goalWeight - weight);
+  const dir = goalWeight > weight ? "gain" : "lose";
+  tipsList.innerHTML += `<li class="mt-2"><p>Goal:</p> You aim to ${dir} ${diff} kg to reach ${goalWeight} kg.</li>`;
+
+  outputDiv.classList.remove("hidden");
+  document.getElementById("downloadBtnContainer").classList.remove("hidden");
 }
-
-outputDiv.classList.remove("hidden");
-
-// ✅ SHOW DOWNLOAD BUTTON
-document.getElementById("downloadBtnContainer").classList.remove("hidden");
-
-}
-function downloadPDF() {
-  const element = document.getElementById("outputDiet");
-  const opt = {
-    margin:       0.5,
-    filename:     'Diet_Plan.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-  };
-  html2pdf().set(opt).from(element).save();
-}
-
 
 
 
@@ -479,94 +322,248 @@ function downloadPDF() {
 // routine
 
 
-    function generateRoutine() {
-        // Form Inputs
-        const goal = document.getElementById('goal').value;
-        const workStart = document.getElementById('work_start').value;
-        const workEnd = document.getElementById('work_end').value;
-        const duration = document.getElementById('duration').value;
 
-        // Generate Routine Based on Goal
-        let routine = [];
-        if (goal === "weight_gain") {
-            routine = [
-                { activity: "Breakfast", time: "7:00 AM" },
-                { activity: "Workout", time: "9:00 AM" },
-                { activity: "Lunch", time: "12:00 PM" },
-                { activity: "Snack", time: "3:00 PM" },
-                { activity: "Dinner", time: "7:00 PM" },
-                { activity: "Sleep", time: "10:00 PM" }
-            ];
-        } else if (goal === "weight_loss") {
-            routine = [
-                { activity: "Breakfast", time: "7:00 AM" },
-                { activity: "Morning Walk", time: "8:00 AM" },
-                { activity: "Lunch", time: "12:00 PM" },
-                { activity: "Workout", time: "4:00 PM" },
-                { activity: "Dinner", time: "7:00 PM" },
-                { activity: "Sleep", time: "10:00 PM" }
-            ];
-        } else {
-            routine = [
-                { activity: "Breakfast", time: "7:00 AM" },
-                { activity: "Work", time: "9:00 AM" },
-                { activity: "Lunch", time: "12:00 PM" },
-                { activity: "Work", time: "1:00 PM" },
-                { activity: "Dinner", time: "6:00 PM" },
-                { activity: "Relax", time: "8:00 PM" },
-                { activity: "Sleep", time: "10:00 PM" }
-            ];
+
+
+let currentRoutine = [];
+
+function generateRoutine() {
+    const goal = document.getElementById('goal').value;
+    const profession = document.getElementById('profession').value;
+    const learnStart = document.getElementById('learn_start').value;
+    const learnEnd = document.getElementById('learn_end').value;
+    const startDate = new Date(document.getElementById('start_date').value);
+    const endDate = new Date(document.getElementById('end_date').value);
+
+    if (startDate > endDate) {
+        alert("Start date cannot be after end date.");
+        return;
+    }
+
+    let routine = [];
+    if (goal === "weight_gain") {
+        routine = [
+            { activity: "Breakfast", time: "7:00 AM" },
+            { activity: "Workout", time: "9:00 AM" },
+            { activity: "Lunch", time: "12:00 PM" },
+            { activity: profession === "student" ? "Study" : "Work", time: learnStart + " - " + learnEnd },
+            { activity: "Snack", time: "3:00 PM" },
+            { activity: "Dinner", time: "7:00 PM" },
+            { activity: "Sleep", time: "10:00 PM" }
+        ];
+    } else if (goal === "weight_loss") {
+        routine = [
+            { activity: "Morning Walk", time: "6:30 AM" },
+            { activity: "Breakfast", time: "7:30 AM" },
+            { activity: "Lunch", time: "12:30 PM" },
+            { activity: profession === "student" ? "Study" : "Work", time: learnStart + " - " + learnEnd },
+            { activity: "Workout", time: "5:30 PM" },
+            { activity: "Dinner", time: "7:00 PM" },
+            { activity: "Sleep", time: "10:00 PM" }
+        ];
+    } else {
+        routine = [
+            { activity: "Breakfast", time: "8:00 AM" },
+            { activity: profession === "student" ? "Study" : "Work", time: learnStart + " - " + learnEnd },
+            { activity: "Lunch", time: "1:00 PM" },
+            { activity: "Relax", time: "6:00 PM" },
+            { activity: "Dinner", time: "8:00 PM" },
+            { activity: "Sleep", time: "10:00 PM" }
+        ];
+    }
+
+    currentRoutine = routine.map(item => ({ ...item }));
+    displayEditableRoutine(currentRoutine);
+    generateCalendar(startDate, endDate);
+}
+
+function generateCalendar(startDate, endDate) {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+    let current = new Date(startDate);
+
+    while (current <= endDate) {
+        const dayDiv = document.createElement('div');
+        dayDiv.classList.add('calendar-day', 'border', 'rounded-lg', 'p-4', 'w-16', 'text-sm', 'bg-white', 'cursor-pointer', 'transition-all', 'duration-200');
+        dayDiv.innerText = `${current.getDate()}/${current.getMonth() + 1}`;
+        dayDiv.title = current.toDateString();
+
+        dayDiv.addEventListener('click', () => {
+            dayDiv.classList.toggle('bg-green-200');
+            dayDiv.classList.toggle('line-through');
+        });
+
+        calendar.appendChild(dayDiv);
+        current.setDate(current.getDate() + 1);
+    }
+}
+
+function displayEditableRoutine(routine) {
+    const previewContent = document.getElementById('routinePreviewContent');
+
+    previewContent.innerHTML = `
+        <form id="editRoutineForm" class="routine-card mb-4 p-6 bg-green-50 border-l-4 border-green-600 rounded-lg">
+            <h3 class="text-xl font-bold text-green-600 mb-4">Edit Your Routine</h3>
+            <div id="routineItems" class="space-y-4 mb-4">
+                ${routine.map((item, idx) => `
+                    <div class="flex items-center gap-4">
+                        <input
+                            type="text"
+                            name="activity"
+                            value="${item.activity}"
+                            data-index="${idx}"
+                            placeholder="Activity"
+                            class="flex-1 p-2 border border-gray-300 rounded-md text-lg"
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="time"
+                            value="${item.time}"
+                            data-index="${idx}"
+                            placeholder="Time (e.g. 7:00 AM or 9:00 AM - 5:00 PM)"
+                            class="w-48 p-2 border border-gray-300 rounded-md text-lg text-center"
+                            required
+                        />
+                        <button type="button" class="remove-btn bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" data-index="${idx}" title="Remove Activity">×</button>
+                    </div>
+                `).join('')}
+            </div>
+            <button type="button" id="addActivityBtn" class="mb-4 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">+ Add New Activity</button>
+            <button type="submit" class="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600">Save Routine</button>
+        </form>
+    `;
+
+    // Remove activity event
+    const removeButtons = previewContent.querySelectorAll('.remove-btn');
+    removeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.index, 10);
+            currentRoutine.splice(idx, 1);
+            displayEditableRoutine(currentRoutine);  // re-render form
+        });
+    });
+
+    // Add new activity event
+    document.getElementById('addActivityBtn').onclick = () => {
+        currentRoutine.push({ activity: "", time: "" });
+        displayEditableRoutine(currentRoutine);
+    };
+
+    // Form submit event
+    document.getElementById('editRoutineForm').onsubmit = function(e) {
+        e.preventDefault();
+
+        const activities = this.querySelectorAll('input[name="activity"]');
+        const times = this.querySelectorAll('input[name="time"]');
+
+        currentRoutine = [];
+        for (let i = 0; i < activities.length; i++) {
+            const act = activities[i].value.trim();
+            const time = times[i].value.trim();
+            if (act && time) {
+                currentRoutine.push({ activity: act, time: time });
+            }
         }
 
-        // Display Routine Preview
-        const previewContent = document.getElementById('routinePreviewContent');
-        previewContent.innerHTML = `
-            <div class="routine-card mb-4 p-6 bg-green-50 border-l-4 border-green-600  rounded-lg">
-                <h3 class="text-xl font-bold text-green-600">Goal: ${goal.replace('_', ' ').toUpperCase()}</h3>
-                <p class="text-lg text-gray-700 mt-2">Work Time: ${workStart} - ${workEnd}</p>
-                <p class="text-lg text-gray-700 mt-2">Routine Duration: ${duration} Month(s)</p>
-                <h4 class="mt-6 text-lg font-semibold text-green-700">Your Routine:</h4>
-                <ul class="mt-4 space-y-3">
-                    ${routine.map(item => `
-                        <li class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover: hover:bg-green-100">
-                            <span class="text-lg text-gray-800 font-semibold">${item.activity}</span> at <span class="text-green-600">${item.time}</span>
-                        </li>
-                    `).join('')}
-                </ul>
+        displayRoutineSummary(currentRoutine);
+    }
+}
+
+
+function displayRoutineSummary(routine) {
+    const previewContent = document.getElementById('routinePreviewContent');
+    const now = new Date();
+    const currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
+
+    // Find current activity index
+    let currentIndex = routine.findIndex((item, i) => {
+        const current = getTimeInMinutes(item.time);
+        const prev = i > 0 ? getTimeInMinutes(routine[i - 1].time) : 0;
+        return currentTimeMinutes >= prev && currentTimeMinutes < current;
+    });
+
+    if (currentIndex === -1 && routine.length > 0 && currentTimeMinutes >= getTimeInMinutes(routine[routine.length - 1].time)) {
+        currentIndex = routine.length - 1; // last one
+    }
+
+    previewContent.innerHTML = `
+        <div class="routine-card mb-4 p-6 bg-green-50 border border-green-200 rounded-lg">
+            <h3 class="text-xl font-bold text-green-600 mb-4">Your Updated Routine</h3>
+            <div class="relative ml-6">
+                <div class="absolute left-3 top-0 bottom-0 w-1 bg-green-300 rounded-full z-0"></div>
+                ${routine.map((item, index) => {
+                    const time = item.time;
+                    const isCurrent = index === currentIndex;
+                    const isPast = index < currentIndex;
+
+                    return `
+                        <div class="relative pl-10 mb-8">
+                            <!-- Dot -->
+                            <div class="absolute left-[6px] top-1 w-4 h-4 rounded-full z-10
+                                ${isCurrent ? 'bg-red-600' : isPast ? 'bg-green-600' : 'bg-green-300'}">
+                            </div>
+
+                            <!-- Line above the dot if it's filled -->
+                            ${isPast ? `<div class="absolute left-3 top-0 h-4 w-1 bg-green-600 z-0"></div>` : ''}
+
+                            <!-- Content -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-semibold text-gray-800">${item.activity}</span>
+                                <span class="text-sm text-green-700 font-mono">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
             </div>
-        `;
+            <button onclick="displayEditableRoutine(currentRoutine)" class="mt-6 w-full bg-yellow-400 text-black p-2 rounded-md hover:bg-yellow-500">Edit Routine Again</button>
+        </div>
+    `;
+}
 
-        // Generate Calendar Based on Routine Duration (1 or 2 months)
-        const calendar = document.getElementById('calendar');
-        calendar.innerHTML = '';
-        const daysInMonth = duration === '1' ? 30 : 60; // Rough approximation for simplicity
 
-        let currentDate = 1;
-        const daysInWeek = 7;
+function saveRoutine() {
+    const activityInputs = document.querySelectorAll('.activityInput');
+    const timeInputs = document.querySelectorAll('.timeInput');
+    const routine = [];
 
-        for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
-            const weekDiv = document.createElement('div');
-            weekDiv.classList.add('calendar-week', 'flex', 'gap-2', 'mb-2');
-
-            for (let j = 0; j < daysInWeek; j++) {
-                if (currentDate <= daysInMonth) {
-                    const dayDiv = document.createElement('div');
-                    dayDiv.classList.add('calendar-day', 'border', 'rounded-lg', 'p-4', 'flex', 'justify-center', 'items-center', 'bg-white', 'cursor-pointer', 'transition-all', 'duration-200');
-                    dayDiv.innerHTML = `${currentDate}`;
-                    currentDate++;
-
-                    // Add Event Listener for marking as completed
-                    dayDiv.addEventListener('click', () => {
-                        dayDiv.classList.toggle('completed');
-                    });
-
-                    weekDiv.appendChild(dayDiv);
-                }
-            }
-
-            calendar.appendChild(weekDiv);
+    for (let i = 0; i < activityInputs.length; i++) {
+        const activity = activityInputs[i].value.trim();
+        const time = timeInputs[i].value.trim();
+        if (activity && time) {
+            routine.push({ activity, time });
         }
     }
+
+    // Save and display
+    currentRoutine = routine;
+    displayRoutineSummary(routine);
+}
+
+function getTimeInMinutes(timeString) {
+    const match = timeString.match(/(\d+):(\d+)\s*(AM|PM)?/i);
+    if (!match) return 0;
+
+    let [_, hour, minute, period] = match;
+    hour = parseInt(hour);
+    minute = parseInt(minute);
+    if (period && period.toUpperCase() === "PM" && hour !== 12) hour += 12;
+    if (period && period.toUpperCase() === "AM" && hour === 12) hour = 0;
+
+    return hour * 60 + parseInt(minute);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // profile 
@@ -575,3 +572,39 @@ function downloadPDF() {
             alert("You have been logged out.");
             window.location.href = "login.html"; // Redirect to the login page (replace with actual URL)
         }
+
+
+
+
+
+
+        // progress
+
+        document.querySelectorAll('.progress-summary').forEach(section => {
+  const startingWeight = parseFloat(section.dataset.startingWeight);
+  const goalWeight = parseFloat(section.dataset.goalWeight);
+
+  // Update the starting and goal weights text from data attributes (in case they differ)
+  section.querySelector('.starting-weight').textContent = startingWeight.toFixed(1);
+  section.querySelector('.goal-weight').textContent = goalWeight.toFixed(1);
+
+  const currentWeightInput = section.querySelector('.current-weight-input');
+  const totalchangeElem = section.querySelector('.total-change');
+
+  function updateTotalchange() {
+    let currentWeight = parseFloat(currentWeightInput.value);
+    if (isNaN(currentWeight) || currentWeight < 0) {
+      currentWeight = startingWeight;
+    }
+    let change = startingWeight - currentWeight;
+    if (change < 0) change = 0;
+
+    totalchangeElem.textContent = change.toFixed(1);
+  }
+
+  // Initial update
+  updateTotalchange();
+
+  // Update on input change
+  currentWeightInput.addEventListener('input', updateTotalchange);
+});
